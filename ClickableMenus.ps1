@@ -533,7 +533,8 @@ function Wait-UIClick {
 
     end {
         # Restore default console behaviour
-        [console]::SetCursorPosition(0, [console]::WindowTop + [console]::WindowHeight)
+        try { [console]::SetCursorPosition(0, [console]::BufferHeight }
+        catch { [console]::SetCursorPosition(0, [console]::BufferHeight - 1)}
         $null = [ConsoleAPI]::SetConsoleMode($hIn, $oldConMode)
         [console]::CursorVisible = $true
         return $formReturnValue
